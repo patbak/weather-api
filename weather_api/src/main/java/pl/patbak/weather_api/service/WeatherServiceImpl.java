@@ -2,7 +2,6 @@ package pl.patbak.weather_api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
@@ -12,7 +11,7 @@ import pl.patbak.weather_api.controller.dto.*;
 import pl.patbak.weather_api.exception.ErrorCode;
 import pl.patbak.weather_api.exception.InvalidCoordinatesException;
 import pl.patbak.weather_api.exception.UnsupportedResponseException;
-import pl.patbak.weather_api.model.DailyWeatherResponse;
+import pl.patbak.weather_api.model.DailyResponse;
 import pl.patbak.weather_api.model.dao.Request;
 import pl.patbak.weather_api.repository.RequestRepository;
 
@@ -23,7 +22,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.logging.Level;
 
 import static pl.patbak.weather_api.StringUtils.formatMessage;
 
@@ -46,7 +44,7 @@ public class WeatherServiceImpl implements WeatherService {
             saveRequest(coordinatesDto);
             HttpResponse<String> response = getData(coordinatesDto);
             if (response.statusCode() == HttpStatus.SC_OK) {
-                var dailyWeatherApiResponse = objectMapper.readValue(response.body(), DailyWeatherResponse.class);
+                var dailyWeatherApiResponse = objectMapper.readValue(response.body(), DailyResponse.class);
                 return conversionService.convert(dailyWeatherApiResponse, DailyPrecipitationSunriseSunsetDto.class);
             } else {
                 throw new UnsupportedResponseException("Weather server returned unsupported response", ErrorCode.UNSUPPORTED_RESPONSE);

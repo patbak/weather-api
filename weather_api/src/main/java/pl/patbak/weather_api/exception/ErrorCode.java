@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ErrorCode {
 
     INVALID_COORDINATES("Invalid coordinates"),
-    UNSUPPORTED_RESPONSE("Unsupported response");
+    UNSUPPORTED_RESPONSE("Unsupported response"),
+    URI_SYNTAX_INCORRECT("URI syntax incorrect");
 
 
     String value;

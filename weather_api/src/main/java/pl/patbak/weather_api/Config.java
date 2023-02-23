@@ -2,7 +2,6 @@ package pl.patbak.weather_api;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import pl.patbak.weather_api.converter.DailyWeatherResponseToDailyPrecipitationSunriseSunsetDtoConverter;
+import pl.patbak.weather_api.converter.DailyResponseToDailyPrecipitationSunriseSunsetDtoConverter;
 
 import java.net.http.HttpClient;
 
@@ -19,7 +18,7 @@ public class Config implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new DailyWeatherResponseToDailyPrecipitationSunriseSunsetDtoConverter());
+        registry.addConverter(new DailyResponseToDailyPrecipitationSunriseSunsetDtoConverter());
     }
 
     @Bean

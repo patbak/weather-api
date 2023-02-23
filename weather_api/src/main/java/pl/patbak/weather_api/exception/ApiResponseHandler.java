@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import pl.patbak.weather_api.controller.dto.ErrorDto;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 
@@ -19,6 +20,12 @@ public class ApiResponseHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<List<ErrorDto>> handleInvalidCoordinates(BaseException ex) {
         log.error("InvalidCoordinates :: {}", ex);
         return createErrorResponseEntity(ex.getErrorCode().getValue(), ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(URISyntaxException.class)
+    public ResponseEntity<List<ErrorDto>> handleURISyntaxException(URISyntaxException ex) {
+        log.error("UnsupportedResponseException :: {}", ex);
+        return createErrorResponseEntity(ErrorCode.URI_SYNTAX_INCORRECT.getValue(), ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(UnsupportedResponseException.class)

@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Data
 @RequiredArgsConstructor
-public class DailyWeatherResponse extends WeatherApiResponse{
+public class DailyResponse extends WeatherApiResponse{
 
     protected DailyPrecipitationSumSunriseSunset daily;
 

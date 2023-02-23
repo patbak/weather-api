@@ -6,7 +6,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import pl.patbak.weather_api.model.DailyWeatherResponse;
+import pl.patbak.weather_api.model.DailyResponse;
 
 
 import java.io.IOException;
@@ -46,6 +46,7 @@ class WeatherApiApplicationTests {
                 .setParameter("longitude", "13.41")
                 .setParameter("start_date", "2023-02-15")
                 .setParameter("end_date", "2023-02-22");
+
         log.info(uriBuilder.build().toString());
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uriBuilder.build())
@@ -77,7 +78,7 @@ class WeatherApiApplicationTests {
                 .GET()
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        var xd = objectMapper.readValue(response.body(), DailyWeatherResponse.class);
+        var xd = objectMapper.readValue(response.body(), DailyResponse.class);
         log.info("Api response :: " + xd);
 
         assertThat(xd.getLatitude(), is(equalTo(52.52)));

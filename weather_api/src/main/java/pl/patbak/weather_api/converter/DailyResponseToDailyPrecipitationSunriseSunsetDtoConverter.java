@@ -4,7 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 import pl.patbak.weather_api.controller.dto.DailyDto;
 import pl.patbak.weather_api.controller.dto.DailyPrecipitationSunriseSunsetDto;
 
-import pl.patbak.weather_api.model.DailyWeatherResponse;
+import pl.patbak.weather_api.model.DailyResponse;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DailyWeatherResponseToDailyPrecipitationSunriseSunsetDtoConverter implements Converter<DailyWeatherResponse, DailyPrecipitationSunriseSunsetDto> {
+public class DailyResponseToDailyPrecipitationSunriseSunsetDtoConverter implements Converter<DailyResponse, DailyPrecipitationSunriseSunsetDto> {
 
     @Override
-    public DailyPrecipitationSunriseSunsetDto convert(DailyWeatherResponse source) {
+    public DailyPrecipitationSunriseSunsetDto convert(DailyResponse source) {
         DailyPrecipitationSunriseSunsetDto dailyPrecipitationSunriseSunsetDto = new DailyPrecipitationSunriseSunsetDto();
         var sourceDaily = source.getDaily();
         var averagePrecipitation = countAveragePrecipitation(sourceDaily.getPrecipitation_sum());
