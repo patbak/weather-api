@@ -24,7 +24,7 @@ public class ApiResponseHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(URISyntaxException.class)
     public ResponseEntity<List<ErrorDto>> handleURISyntaxException(URISyntaxException ex) {
-        log.error("UnsupportedResponseException :: {}", ex);
+        log.error("URISyntaxException :: {}", ex);
         return createErrorResponseEntity(ErrorCode.URI_SYNTAX_INCORRECT.getValue(), ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
