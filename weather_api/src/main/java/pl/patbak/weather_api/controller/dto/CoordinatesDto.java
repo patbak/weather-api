@@ -1,12 +1,9 @@
 package pl.patbak.weather_api.controller.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class CoordinatesDto {

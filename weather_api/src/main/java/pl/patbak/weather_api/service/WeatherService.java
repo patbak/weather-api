@@ -7,5 +7,7 @@ public interface WeatherService {
 
     DailyPrecipitationSunriseSunsetDto getWeather(CoordinatesDto coordinatesDto);
 
+    void validateParams(CoordinatesDto coordinatesDto);
+
 
 }

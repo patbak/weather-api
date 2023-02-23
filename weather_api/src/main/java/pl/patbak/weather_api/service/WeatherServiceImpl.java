@@ -2,6 +2,8 @@ package pl.patbak.weather_api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.core.convert.ConversionService;
@@ -21,12 +23,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
 
 import static pl.patbak.weather_api.StringUtils.formatMessage;
 
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class WeatherServiceImpl implements WeatherService {
 
     private final HttpClient httpClient;
@@ -63,6 +67,7 @@ public class WeatherServiceImpl implements WeatherService {
                 .longitude(coordinatesDto.getLongitude())
                 .dateTime(LocalDateTime.now())
                 .build();
+        log.debug("Request :: {}", request);
         requestRepository.saveAndFlush(request);
     }
 
@@ -78,10 +83,10 @@ public class WeatherServiceImpl implements WeatherService {
                 .addParameter("daily", "sunrise")
                 .addParameter("daily", "sunset")
                 .setParameter("timezone", "GMT")
-                .setParameter("start_date", date.minusDays(7l).toString())
+                .setParameter("start_date", date.minusDays(6l).toString())
                 .setParameter("end_date", date.toString())
                 .build();
-
+        log.debug("URI :: ", uri);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .GET()
@@ -90,6 +95,7 @@ public class WeatherServiceImpl implements WeatherService {
         return response;
     }
 
+    @Override
     public void validateParams(CoordinatesDto coordinatesDto) {
         if (coordinatesDto.getLongitude() > 180 || coordinatesDto.getLongitude() < -180 || coordinatesDto.getLatitude() > 90 || coordinatesDto.getLatitude() < -90)
             throw new InvalidCoordinatesException(
